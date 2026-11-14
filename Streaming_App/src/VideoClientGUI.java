@@ -25,11 +25,9 @@ public class VideoClientGUI extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
-        // Styling
         Font regularFont = new Font("Segoe UI", Font.PLAIN, 14);
         Font boldFont = new Font("Segoe UI", Font.BOLD, 14);
 
-        // TOP: Connection & Controls Panel
         JPanel topPanel = new JPanel(new GridLayout(2, 1, 6, 6));
         topPanel.setBorder(new EmptyBorder(12, 12, 0, 12));
 
@@ -75,7 +73,6 @@ public class VideoClientGUI extends JFrame {
         topPanel.add(selectPanel);
         add(topPanel, BorderLayout.NORTH);
 
-        // CENTER: Progress & Status Panel
         JPanel centerPanel = new JPanel(new BorderLayout(8, 8));
         centerPanel.setBorder(new EmptyBorder(6, 12, 6, 12));
 
@@ -97,7 +94,6 @@ public class VideoClientGUI extends JFrame {
 
         centerPanel.add(progContainer, BorderLayout.NORTH);
 
-        // Socket Log Area
         logArea = new JTextArea();
         logArea.setEditable(false);
         logArea.setBackground(new Color(24, 24, 27));
@@ -109,7 +105,6 @@ public class VideoClientGUI extends JFrame {
 
         add(centerPanel, BorderLayout.CENTER);
 
-        // Fetch videos on launch
         SwingUtilities.invokeLater(this::fetchVideoList);
     }
 
@@ -305,7 +300,6 @@ public class VideoClientGUI extends JFrame {
                     fos.write(buffer, 0, n);
                     bytesReceived += n;
 
-                    // Update UI progress
                     int pct = (int) ((bytesReceived * 100) / totalSize);
                     long elapsed = Math.max(1, System.currentTimeMillis() - startTime);
                     double speedMBs = (bytesReceived / (1024.0 * 1024.0)) / (elapsed / 1000.0);
@@ -318,7 +312,6 @@ public class VideoClientGUI extends JFrame {
                         statusLabel.setText("Streaming video chunks over socket...");
                     });
 
-                    // Progressive Playback: Launch video player after initial 512 KB buffer
                     if (!launchedPlayer && bytesReceived >= Math.min(512 * 1024, totalSize / 4)) {
                         launchedPlayer = true;
                         fos.flush();

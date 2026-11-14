@@ -8,10 +8,8 @@ public class VideoClient {
              BufferedInputStream in = new BufferedInputStream(socket.getInputStream());
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 
-            // Request the video file
             out.println("PLAY sheli.mp4");
 
-            // Read server status line (e.g. "OK 8038862" or "ERROR File not found")
             String header = readLine(in);
             if (header == null) {
                 System.out.println("No response from server.");
@@ -42,9 +40,6 @@ public class VideoClient {
         }
     }
 
-    /**
-     * Reads a line of text terminated by '\n' without reading ahead into binary data.
-     */
     private static String readLine(InputStream in) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         int b;
